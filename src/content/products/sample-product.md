@@ -6,7 +6,7 @@ category: Featured
 image: /uploads/825267335_122173162214722326_7208790577021592301_n.jpg
 gallery: []
 featured: true
-draft: true
+draft: false
 order: 1
 ---
 
