@@ -78,7 +78,7 @@ collections:
     create: true
     extension: md
     fields:
-      - { label: Image title, name: title, widget: string }
+      - { label: Image title (optional), name: title, widget: string, required: false }
       - { label: Image, name: image, widget: image }
       - { label: Alt text, name: alt, widget: string }
       - { label: Display order, name: order, widget: number, value_type: int, default: 100, required: false }
