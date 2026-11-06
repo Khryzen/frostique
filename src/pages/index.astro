@@ -1,0 +1,56 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { getCollection, getEntry } from 'astro:content';
+import site from '../data/site.json';
+const home = await getEntry('pages', 'home');
+const products = (await getCollection('products', ({ data }) => !data.draft))
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || a.data.order - b.data.order)
+  .slice(0, 3);
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
+---
+<MainLayout title="Home" description={home?.data.description || site.tagline}>
+  <section class="hero container">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">A Frostique introduction</span>
+        <h1 class="serif">{home?.data.title || 'Discover Frostique'}</h1>
+        <p class="hero-copy">{home?.data.description || site.tagline}</p>
+        <div class="hero-actions">
+          <a class="button" href={asset('/products/')}>{home?.data.primaryCta || 'Explore the collection'}</a>
+          {site.facebookUrl && <a class="button secondary" href={site.facebookUrl} target="_blank" rel="noreferrer">Visit Facebook</a>}
+        </div>
+      </div>
+      <div class="hero-art"><div class="hero-placeholder">FROSTIQUE<br/><small>Replace with your brand photography</small></div></div>
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="section-heading">
+      <span class="eyebrow">The collection</span>
+      <h2>Made to be discovered.</h2>
+      <p>Explore the products and stories behind Frostique.</p>
+    </div>
+    {products.length > 0 ? <div class="product-grid">{products.map((product) => <ProductCard product={product} />)}</div> : <p class="notice">Products will appear here when published in the content manager.</p>}
+    <p style="margin-top:30px"><a class="button secondary" href={asset('/products/')}>View all products</a></p>
+  </section>
+
+  <section class="section story">
+    <div class="container story-grid">
+      <div class="story-mark">F.</div>
+      <div class="story-copy">
+        <span class="eyebrow">The brand</span>
+        <h2 class="serif" style="font-size:clamp(2rem,4vw,3.3rem)">{home?.data.aboutHeading || 'A little about Frostique'}</h2>
+        <p>{home?.data.aboutText || 'Add your brand story in the content manager.'}</p>
+        <a class="button secondary" href={asset('/about/')}>Our story</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="cta-panel">
+      <div><span class="eyebrow" style="color:#d0d1c9">Get in touch</span><h2>Have a question?</h2><p>We would be glad to hear from you.</p></div>
+      <a class="button" href={asset('/contact/')}>Contact Frostique</a>
+    </div>
+  </section>
+</MainLayout>

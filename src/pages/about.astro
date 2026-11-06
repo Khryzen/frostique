@@ -1,0 +1,10 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { getEntry, render } from 'astro:content';
+const about = await getEntry('pages', 'about');
+const Content = about ? (await render(about)).Content : null;
+---
+<MainLayout title={about?.data.title || 'About'} description={about?.data.description || 'The story behind Frostique.'}>
+  <section class="container page-intro"><span class="eyebrow">Our story</span><h1>{about?.data.title || 'About Frostique'}</h1><p>{about?.data.description}</p></section>
+  <section class="container section" style="padding-top:10px"><div class="prose">{Content && <Content />}</div></section>
+</MainLayout>

@@ -1,0 +1,49 @@
+---
+import '../styles/global.css';
+import site from '../data/site.json';
+interface Props { title?: string; description?: string }
+const { title = site.businessName, description = site.tagline } = Astro.props;
+const canonicalPath = `${import.meta.env.BASE_URL}${Astro.url.pathname.replace(/^\//, '')}`;
+const canonical = new URL(canonicalPath, Astro.site);
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={`${title} | ${site.businessName}`} />
+    <meta property="og:description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={asset('/favicon.svg')} />
+    <meta name="theme-color" content="#f8f7f3" />
+    <title>{title} | {site.businessName}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href={asset('/')}>{site.businessName.toUpperCase()}</a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href={asset('/')}>Home</a>
+          <a href={asset('/products/')}>Products</a>
+          <a href={asset('/about/')}>About</a>
+          <a href={asset('/contact/')}>Contact</a>
+        </nav>
+      </div>
+    </header>
+    <main><slot /></main>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <span>© {new Date().getFullYear()} {site.businessName}. All rights reserved.</span>
+        <div class="footer-links">
+          {site.facebookUrl && <a href={site.facebookUrl} target="_blank" rel="noreferrer">Facebook</a>}
+          <a href={asset('/contact/')}>Contact</a>
+          <a href={asset('/admin/')}>Edit content</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

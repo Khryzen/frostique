@@ -1,0 +1,84 @@
+# Sveltia CMS configuration. This file is public; never put secrets or tokens here.
+backend:
+  name: github
+  repo: Khryzen/frostique
+  branch: main
+  auth_methods: [token]
+
+media_folder: /public/uploads
+public_folder: /uploads
+
+publish_mode: simple
+
+collections:
+  - name: products
+    label: Products
+    label_singular: Product
+    folder: /src/content/products
+    create: true
+    extension: md
+    format: frontmatter
+    slug: '{{slug}}'
+    summary: '{{title}} · {{category}}'
+    sortable_fields: [title, category, featured]
+    fields:
+      - { label: Product name, name: title, widget: string }
+      - { label: URL slug, name: slug, widget: string, hint: 'Use lowercase words separated by hyphens.' }
+      - { label: Short description, name: description, widget: text }
+      - { label: Category, name: category, widget: string, required: false }
+      - { label: Main image, name: image, widget: image, required: false }
+      - { label: Additional images, name: gallery, widget: list, required: false, field: { label: Image, name: image, widget: image } }
+      - { label: Featured on homepage, name: featured, widget: boolean, default: false, required: false }
+      - { label: Draft, name: draft, widget: boolean, default: false, required: false }
+      - { label: Display order, name: order, widget: number, value_type: int, default: 100, required: false }
+      - { label: Details, name: body, widget: markdown, required: false }
+
+  - name: pages
+    label: Pages
+    files:
+      - label: Homepage
+        name: home
+        file: /src/content/pages/home.md
+        fields:
+          - { label: Hero heading, name: title, widget: string }
+          - { label: Hero text, name: description, widget: text }
+          - { label: Primary button label, name: primaryCta, widget: string }
+          - { label: About heading, name: aboutHeading, widget: string }
+          - { label: About text, name: aboutText, widget: text }
+          - { label: Body, name: body, widget: markdown, required: false }
+      - label: About page
+        name: about
+        file: /src/content/pages/about.md
+        fields:
+          - { label: Page title, name: title, widget: string }
+          - { label: Introduction, name: description, widget: text }
+          - { label: Body, name: body, widget: markdown }
+
+  - name: settings
+    label: Site settings
+    files:
+      - label: Business and contact details
+        name: business
+        file: /src/data/site.json
+        format: json
+        fields:
+          - { label: Business name, name: businessName, widget: string }
+          - { label: Tagline, name: tagline, widget: string }
+          - { label: Logo, name: logo, widget: image, required: false }
+          - { label: Facebook page URL, name: facebookUrl, widget: string, required: false }
+          - { label: Messenger URL, name: messengerUrl, widget: string, required: false }
+          - { label: Contact email, name: email, widget: string, required: false }
+          - { label: Phone number, name: phone, widget: string, required: false }
+          - { label: Location, name: location, widget: string, required: false }
+          - { label: Contact form endpoint, name: formEndpoint, widget: string, required: false }
+
+  - name: gallery
+    label: Brand gallery
+    folder: /src/content/gallery
+    create: true
+    extension: md
+    fields:
+      - { label: Image title, name: title, widget: string }
+      - { label: Image, name: image, widget: image }
+      - { label: Alt text, name: alt, widget: string }
+      - { label: Display order, name: order, widget: number, value_type: int, default: 100, required: false }

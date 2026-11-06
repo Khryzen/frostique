@@ -1,0 +1,12 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { getCollection } from 'astro:content';
+const products = (await getCollection('products', ({ data }) => !data.draft)).sort((a,b)=>a.data.order-b.data.order);
+---
+<MainLayout title="Products" description="Explore the Frostique product collection.">
+  <section class="container page-intro"><span class="eyebrow">The collection</span><h1>Our products</h1><p>Explore the Frostique collection. Product details and photography can be updated through the content manager.</p></section>
+  <section class="container section" style="padding-top:20px">
+    {products.length ? <div class="product-grid">{products.map((product)=><ProductCard product={product}/>)}</div> : <p class="notice">No published products yet. Add a product in the CMS and make sure Draft is turned off.</p>}
+  </section>
+</MainLayout>

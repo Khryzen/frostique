@@ -1,0 +1,11 @@
+---
+interface Props { product: { id: string; data: { title: string; description: string; category: string; image?: string; slug: string } } }
+const { product } = Astro.props;
+const image = product.data.image || '/uploads/products/product-placeholder.svg';
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
+---
+<a class="product-card" href={asset(`/products/${product.data.slug || product.id}/`)}>
+  <div class="product-image"><img src={asset(image)} alt={product.data.title} loading="lazy" /></div>
+  <div class="product-meta"><h3>{product.data.title}</h3><span>{product.data.category}</span></div>
+  <p>{product.data.description}</p>
+</a>

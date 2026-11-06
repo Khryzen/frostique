@@ -1,0 +1,20 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { getCollection } from 'astro:content';
+import { render } from 'astro:content';
+export async function getStaticPaths() {
+  const products = await getCollection('products', ({ data }) => !data.draft);
+  return products.map((product) => ({ params: { slug: product.data.slug }, props: { product } }));
+}
+const { product } = Astro.props;
+const { Content } = await render(product);
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
+---
+<MainLayout title={product.data.title} description={product.data.description}>
+  <section class="container page-intro"><span class="eyebrow">{product.data.category}</span><h1>{product.data.title}</h1><p>{product.data.description}</p></section>
+  <section class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;padding-bottom:60px">
+    <img src={asset(product.data.image || '/uploads/products/product-placeholder.svg')} alt={product.data.title} style="width:100%;aspect-ratio:4/5;object-fit:cover;background:#eae7df" />
+    <div class="prose"><Content />{product.data.gallery.length > 0 && <div class="product-grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">{product.data.gallery.map((image)=><img src={asset(image)} alt={`${product.data.title} gallery image`} loading="lazy" />)}</div>}</div>
+  </section>
+  <style> @media(max-width:700px){section.container[style*="grid-template-columns"]{grid-template-columns:1fr!important}} </style>
+</MainLayout>
