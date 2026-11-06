@@ -3,26 +3,67 @@ import MainLayout from '../layouts/MainLayout.astro';
 import site from '../data/site.json';
 ---
 <MainLayout title="Contact" description="Contact Frostique for product questions and inquiries.">
-  <section class="container page-intro"><span class="eyebrow">Say hello</span><h1>Get in touch.</h1><p>For product questions and other inquiries, use the contact details or send a message below.</p></section>
+  <section class="container page-intro">
+    <span class="eyebrow">Say hello</span>
+    <h1>Get in touch.</h1>
+    <p>For product questions and other inquiries, send Frostique a message.</p>
+  </section>
+
   <section class="container section" style="padding-top:10px">
     <div class="contact-grid">
       <div class="contact-info">
         <h2 class="serif" style="font-size:2rem">Contact details</h2>
         {site.email && <p><strong>Email</strong><br/><a href={`mailto:${site.email}`}>{site.email}</a></p>}
-        {site.phone && <p><strong>Phone</strong><br/><a href={`tel:${site.phone.replace(/[^+\d]/g,'')}`}>{site.phone}</a></p>}
+        {site.phone && <p><strong>Phone</strong><br/><a href={`tel:${site.phone.replace(/[^+\\d]/g,'')}`}>{site.phone}</a></p>}
         {site.location && <p><strong>Location</strong><br/>{site.location}</p>}
         {site.facebookUrl && <p><strong>Facebook</strong><br/><a href={site.facebookUrl} target="_blank" rel="noreferrer">Visit Frostique on Facebook</a></p>}
         {site.messengerUrl && <p><a class="button secondary" href={site.messengerUrl} target="_blank" rel="noreferrer">Message us on Messenger</a></p>}
-        {!site.email && !site.phone && !site.location && <p class="notice">Add the business email, phone number, and location in the CMS settings to display them here.</p>}
+        {!site.email && <p class="notice">The contact email is not configured yet. Add it under CMS → Site settings → Contact email to enable email inquiries.</p>}
       </div>
+
       <div>
-        {site.formEndpoint ? <form class="contact-form" action={site.formEndpoint} method="POST">
-          <div class="field"><label for="name">Your name</label><input id="name" name="name" autocomplete="name" required /></div>
-          <div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" required /></div>
-          <div class="field"><label for="message">Message</label><textarea id="message" name="message" required></textarea></div>
-          <button class="button" type="submit">Send inquiry</button>
-        </form> : <div class="notice">The contact form is ready, but it needs a form endpoint (for example, a Formspree form ID). Add the endpoint in CMS → Site settings after creating the form service account.</div>}
+        {site.email ? <form class="contact-form" id="contact-form" data-recipient={site.email}>
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="sender-email">Your email address</label>
+            <input id="sender-email" name="senderEmail" type="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button class="button" type="submit">Continue to email</button>
+          <p class="notice" style="margin-top:12px">Your email application will open with the message addressed to Frostique. Review and send it there.</p>
+        </form> : <div class="notice">The contact form will appear here once a Contact email is added in Sveltia CMS → Site settings.</div>}
       </div>
     </div>
   </section>
+
+  <script>
+    const form = document.querySelector<HTMLFormElement>('#contact-form');
+
+    form?.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      if (!form.reportValidity()) return;
+
+      const data = new FormData(form);
+      const recipient = form.dataset.recipient;
+      if (!recipient) return;
+
+      const name = String(data.get('name') ?? '').trim();
+      const senderEmail = String(data.get('senderEmail') ?? '').trim();
+      const message = String(data.get('message') ?? '').trim();
+
+      const subject = encodeURIComponent(`Frostique website inquiry from ${name}`);
+      const body = encodeURIComponent(
+        `Name: ${name}\nEmail: ${senderEmail}\n\nMessage:\n${message}`
+      );
+
+      window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+    });
+  </script>
 </MainLayout>
