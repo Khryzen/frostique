@@ -30,7 +30,7 @@ const pages = defineCollection({
 const gallery = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/gallery' }),
   schema: z.object({
-    title: z.string(),
+    title: z.string().optional(),
     image: z.string(),
     alt: z.string(),
     order: z.number().default(100),
