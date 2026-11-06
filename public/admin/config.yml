@@ -58,6 +58,17 @@ collections:
           - { label: Introduction, name: description, widget: text }
           - { label: Body, name: body, widget: markdown }
 
+  - name: legal
+    label: Legal pages
+    files:
+      - label: Terms and Conditions
+        name: terms
+        file: /src/content/pages/terms.md
+        fields:
+          - { label: Page title, name: title, widget: string }
+          - { label: Page description, name: description, widget: text, required: false }
+          - { label: Terms content, name: body, widget: markdown }
+
   - name: settings
     label: Site settings
     files:
