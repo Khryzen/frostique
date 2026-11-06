@@ -2,7 +2,7 @@
 title: Ice Cream Float
 slug: float-1
 description: Perfect for birthdays, parties, and special celebrations. Let your guests enjoy a sweet treat while you enjoy a hassle-free dessert experience!
-category: ''
+category: Featured
 image: /uploads/500119390_122127414230722326_900500808046734831_n.jpg
 gallery: []
 featured: true
