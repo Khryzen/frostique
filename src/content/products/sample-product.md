@@ -10,13 +10,13 @@ draft: false
 order: 1
 ---
 
-\## Sundae Package – ₱5,200
+## Sundae Package – ₱5,200
 
-\*\*Good for 100 Guests\*\*
+**_Good for 100 Guests_**
 
 Make your celebration sweeter with our Sundae Package! Enjoy a delicious vanilla sundae experience, complete with a dedicated booth and service crew to serve your guests.
 
-\### Package Inclusions
+### Package Inclusions
 
 \- Vanilla-flavored sundae
 
@@ -32,8 +32,8 @@ Make your celebration sweeter with our Sundae Package! Enjoy a delicious vanilla
 
 \- Personalized A4 print featuring the celebrant's name and photo
 
-\### Package Price
+### Package Price
 
-\*\*₱5,200\*\*
+**_₱5,200_**
 
 Perfect for birthdays, parties, and special celebrations. Let your guests enjoy a sweet treat while you enjoy a hassle-free dessert experience!
