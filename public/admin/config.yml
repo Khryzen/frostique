@@ -42,9 +42,13 @@ collections:
         fields:
           - { label: Hero heading, name: title, widget: string }
           - { label: Hero text, name: description, widget: text }
+          - { label: Hero image, name: heroImage, widget: image, required: false }
+          - { label: Hero image alt text, name: heroImageAlt, widget: string, required: false }
           - { label: Primary button label, name: primaryCta, widget: string }
           - { label: About heading, name: aboutHeading, widget: string }
           - { label: About text, name: aboutText, widget: text }
+          - { label: About section image, name: aboutImage, widget: image, required: false }
+          - { label: About image alt text, name: aboutImageAlt, widget: string, required: false }
           - { label: Body, name: body, widget: markdown, required: false }
       - label: About page
         name: about
