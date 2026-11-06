@@ -8,7 +8,7 @@ const products = defineCollection({
     slug: z.string(),
     description: z.string(),
     category: z.string().default('General'),
-    image: z.string().optional(),
+    image: z.string().min(1, 'A package photo is required.'),
     gallery: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
