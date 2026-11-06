@@ -26,7 +26,7 @@ collections:
       - { label: URL slug, name: slug, widget: string, hint: 'Use lowercase words separated by hyphens.' }
       - { label: Short description, name: description, widget: text }
       - { label: Category, name: category, widget: string, required: false }
-      - { label: Main image, name: image, widget: image, required: false }
+      - { label: Package photo (required), name: image, widget: image }
       - { label: Additional images, name: gallery, widget: list, required: false, field: { label: Image, name: image, widget: image } }
       - { label: Featured on homepage, name: featured, widget: boolean, default: false, required: false }
       - { label: Draft, name: draft, widget: boolean, default: false, required: false }
