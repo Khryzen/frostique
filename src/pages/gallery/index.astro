@@ -21,7 +21,7 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//
         {images.map((item) => (
           <figure class="gallery-item">
             <img src={asset(item.data.image)} alt={item.data.alt} loading="lazy" />
-            <figcaption>{item.data.title}</figcaption>
+            {item.data.title && <figcaption>{item.data.title}</figcaption>}
           </figure>
         ))}
       </div>
