@@ -9,6 +9,7 @@ const products = (await getCollection('products', ({ data }) => !data.draft))
   .slice(0, 3);
 const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
 ---
+
 <MainLayout title="Home" description={home?.data.description || site.tagline}>
   <section class="hero container">
     <div class="hero-grid">
@@ -21,7 +22,13 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//
           {site.facebookUrl && <a class="button secondary" href={site.facebookUrl} target="_blank" rel="noreferrer">Visit Facebook</a>}
         </div>
       </div>
-      <div class="hero-art"><div class="hero-placeholder">FROSTIQUE<br/><small>Replace with your brand photography</small></div></div>
+      <div class="hero-art">
+        {home?.data.heroImage ? (
+          <img class="hero-image" src={asset(home.data.heroImage)} alt={home.data.heroImageAlt || home.data.title || 'Frostique featured image'} fetchpriority="high" />
+        ) : (
+          <div class="hero-placeholder">FROSTIQUE<br/><small>Add a hero image in the CMS</small></div>
+        )}
+      </div>
     </div>
   </section>
 
@@ -37,7 +44,13 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//
 
   <section class="section story">
     <div class="container story-grid">
-      <div class="story-mark">F.</div>
+      {home?.data.aboutImage ? (
+        <div class="story-image-wrap">
+          <img class="story-image" src={asset(home.data.aboutImage)} alt={home.data.aboutImageAlt || home.data.aboutHeading || 'Frostique brand story'} loading="lazy" />
+        </div>
+      ) : (
+        <div class="story-mark">F.</div>
+      )}
       <div class="story-copy">
         <span class="eyebrow">The brand</span>
         <h2 class="serif" style="font-size:clamp(2rem,4vw,3.3rem)">{home?.data.aboutHeading || 'A little about Frostique'}</h2>
@@ -54,3 +67,29 @@ const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//
     </div>
   </section>
 </MainLayout>
+
+<style>
+  .hero-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 360px;
+    max-height: 560px;
+    object-fit: cover;
+    border-radius: var(--radius, 18px);
+  }
+
+  .story-image-wrap {
+    min-height: 280px;
+    overflow: hidden;
+    border-radius: var(--radius, 18px);
+  }
+
+  .story-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    object-fit: cover;
+  }
+</style>
