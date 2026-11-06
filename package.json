@@ -10,7 +10,7 @@
     "check": "astro check"
   },
   "dependencies": {
-    "@astrojs/svelte": "^7.0.0",
+    "@astrojs/svelte": "^8.1.2",
     "astro": "^6.0.0",
     "svelte": "^5.0.0"
   },
