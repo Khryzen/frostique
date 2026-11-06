@@ -1,0 +1,23 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { getEntry, render } from 'astro:content';
+
+const terms = await getEntry('pages', 'terms');
+const Content = terms ? (await render(terms)).Content : null;
+---
+
+<MainLayout
+  title={terms?.data.title || 'Terms and Conditions'}
+  description={terms?.data.description || 'Terms and conditions for using the Frostique website.'}
+>
+  <section class="container page-intro">
+    <span class="eyebrow">Legal</span>
+    <h1>{terms?.data.title || 'Terms and Conditions'}</h1>
+    {terms?.data.description && <p>{terms.data.description}</p>}
+  </section>
+  <section class="container section" style="padding-top:10px">
+    <div class="prose">
+      {Content ? <Content /> : <p>Terms and Conditions content is being prepared.</p>}
+    </div>
+  </section>
+</MainLayout>
