@@ -1,0 +1,37 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { getCollection } from 'astro:content';
+
+const images = (await getCollection('gallery'))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
+---
+
+<MainLayout title="Gallery" description="A look at Frostique products, creations, and moments.">
+  <section class="container page-intro">
+    <span class="eyebrow">A closer look</span>
+    <h1>Frostique gallery</h1>
+    <p>Explore our creations, product details, and moments. New photos can be added anytime through the content manager.</p>
+  </section>
+
+  <section class="container gallery-section">
+    {images.length > 0 ? (
+      <div class="gallery-grid">
+        {images.map((item) => (
+          <figure class="gallery-item">
+            <img src={asset(item.data.image)} alt={item.data.alt} loading="lazy" />
+            <figcaption>{item.data.title}</figcaption>
+          </figure>
+        ))}
+      </div>
+    ) : (
+      <div class="gallery-empty">
+        <span class="eyebrow">Coming into focus</span>
+        <h2>Our gallery is being prepared.</h2>
+        <p>Visit the content manager to add your first photos. Published gallery images will appear here automatically.</p>
+        <a class="button" href={asset('/admin/')}>Open content manager</a>
+      </div>
+    )}
+  </section>
+</MainLayout>
